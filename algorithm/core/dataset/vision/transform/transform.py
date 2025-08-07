@@ -51,7 +51,11 @@ class ImageTransform(dict):
 
     @property
     def mean_std(self):
-        if True:  # MCU side model
+        # Check if we want to disable MCU transforms for ResNet18/CIFAR-10
+        if hasattr(configs.net_config, 'net_name') and configs.net_config.net_name == 'resnet18':
+            print('Using standard ImageNet normalization for ResNet18')
+            return {'mean': [0.485, 0.456, 0.406], 'std': [0.229, 0.224, 0.225]}
+        elif True:  # MCU side model
             print('Using MCU transform (leading to range -128, 127)')
             return {'mean': [0.5, 0.5, 0.5], 'std': [1 / 255, 1 / 255, 1 / 255]}
         else:

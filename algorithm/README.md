@@ -9,7 +9,7 @@ In this section, we provide the code to simulate the on-device training on GPU s
 ```bash
 conda create -n mcunetv3 python=3.8
 conda activate mcunetv3
-conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 pip install easydict
 pip install timm
 ```

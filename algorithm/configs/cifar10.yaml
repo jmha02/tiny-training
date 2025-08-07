@@ -1,0 +1,17 @@
+data_provider:
+  dataset: cifar10
+  root: /root/dataset/cifar10
+  num_classes: 10
+  image_size: 32
+
+run_config:
+  # learning rate
+  base_lr: 0.1
+  n_epochs: 20
+  # optimizer - use standard SGD, not quantized
+  optimizer_name: sgd_nomom
+  weight_decay: 0
+
+net_config:
+  net_name: resnet18
+  pretrained: false
