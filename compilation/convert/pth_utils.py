@@ -18,8 +18,8 @@ import tvm
 from tvm import relay, te
 from tvm.contrib import graph_executor
 
-from ..mod import mod_save, mod_load
-from ..autodiff.mcuop import *
+from compilation.mod import mod_save, mod_load
+from compilation.autodiff.mcuop import *
 
 from .mcunetv3_wrapper import (
     QuantizedConv2dDiff,

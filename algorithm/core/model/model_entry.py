@@ -1,7 +1,7 @@
 import torch
-from core.utils.config import configs 
-from quantize.custom_quantized_format import build_quantized_network_from_cfg
-from quantize.quantize_helper import create_scaled_head, create_quantized_head
+from algorithm.core.utils.config import configs 
+from algorithm.quantize.custom_quantized_format import build_quantized_network_from_cfg
+from algorithm.quantize.quantize_helper import create_scaled_head, create_quantized_head
 
 __all__ = ['build_mcu_model', 'build_model']
 

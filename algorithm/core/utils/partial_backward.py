@@ -293,7 +293,8 @@ def apply_backward_config(model, backward_config):
                 conv.weight.grad = None
         else:  # do not even update
             conv.weight.grad = None
-            conv.bias.grad = None
+            if conv.bias is not None:
+                conv.bias.grad = None
     assert n_w_trained == len(backward_config['manual_weight_idx']), \
         (n_w_trained, len(backward_config['manual_weight_idx']))
 

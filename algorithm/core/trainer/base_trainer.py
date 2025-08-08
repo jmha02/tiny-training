@@ -88,9 +88,18 @@ class BaseTrainer(object):
         raise NotImplementedError
 
     def run_training(self):
+        import time
         val_info_dict = None
+        total_training_time = 0
+        
         for epoch in range(self.start_epoch, configs.run_config.n_epochs + configs.run_config.warmup_epochs):
+            epoch_start_time = time.time()
             train_info_dict = self.train_one_epoch(epoch)
+            epoch_time = time.time() - epoch_start_time
+            total_training_time += epoch_time
+            
+            train_info_dict['train/epoch_time'] = epoch_time
+            train_info_dict['train/total_time'] = total_training_time
             logger.info(f'epoch {epoch}: f{train_info_dict}')
 
             if (epoch + 1) % configs.run_config.eval_per_epochs == 0 \
@@ -102,6 +111,8 @@ class BaseTrainer(object):
                 if is_best:
                     logger.info(' * New best acc (epoch {}): {:.2f}'.format(epoch, self.best_val))
                 val_info_dict['val/best'] = self.best_val
+                val_info_dict['train/epoch_time'] = epoch_time
+                val_info_dict['train/total_time'] = total_training_time
                 logger.info(f'epoch {epoch}: {val_info_dict}')
                 
                 # save model

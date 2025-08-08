@@ -20,7 +20,6 @@ from .mcunetv3_wrapper import (
     QuantizedAvgPoolDiff,
 )
 
-
 def build_quantized_model(net_name="mbv2-w0.35", num_classes=10):
     load_config_from_file("configs/transfer.yaml")
     configs["net_config"]["net_name"] = net_name # "mbv2-w0.35"
@@ -43,6 +42,14 @@ def build_quantized_model(net_name="mbv2-w0.35", num_classes=10):
     subnet[-1].x_scale = last.x_scale
     subnet[-1].weight.data = last.weight.data[:num_classes, :, :, :]
     return subnet, resolution
+
+
+def build_quantized_resnet(num_classes=10):
+    """Build standard PyTorch ResNet18 model for TVM compilation"""
+    import torchvision.models as models
+    model = models.resnet18(pretrained=False, num_classes=num_classes)
+    resolution = 32  # CIFAR-10 input size
+    return model, resolution
 
 
 build_quantized_mcunet = functools.partial(

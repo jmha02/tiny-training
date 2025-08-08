@@ -1,16 +1,24 @@
 import os
 import os.path as osp
 import json
-from compilation.convert import (
+import sys
+
+# Initialize configs properly before importing MCU models
+sys.path.append('algorithm')
+from core.utils.config import configs, load_config_from_file
+load_config_from_file('configs/default.yaml')
+
+from convert import (
     build_quantized_mcunet,
     build_quantized_mbv2,
     build_quantized_proxyless,
+    build_quantized_resnet,
     pth_model_to_ir,
     generated_backward_graph
 )
 
 # some configs
-model_name = "mcunet"
+model_name = "mbv2"
 rs = 128
 num_classes = 10
 int8_bp = False
@@ -74,6 +82,41 @@ elif model_name == "proxyless":
         },
         "148kb": {
             'enable_backward_config': 1, 'n_bias_update': 45, 'n_weight_update': 0, 'weight_update_ratio': [1, 1, 1, 1, 1, 1, 1, 1], 'manual_weight_idx': [36, 39, 42, 45, 48, 51, 54, 57], 'weight_select_criteria': 'magnitude+', 'pw1_weight_only': 0
+        }
+    }
+elif model_name == "resnet18":
+    path = "ir_zoos/resnet18_quantize"
+    model, _ = build_quantized_resnet(num_classes=num_classes)
+    sparse_update_config = {
+        "49kb": {
+            "enable_backward_config": 1, "n_bias_update": 20, "n_weight_update": 0, 
+            "weight_update_ratio": [0, 0.25, 0.5, 0.5, 0, 0], 
+            "manual_weight_idx": [23, 24, 27, 30, 33, 39], 
+            "weight_select_criteria": "magnitude+", "pw1_weight_only": 0,
+        },
+        "74kb": {
+            'enable_backward_config': 1, 'n_bias_update': 21, 'n_weight_update': 0, 
+            'weight_update_ratio': [1, 0, 1, 0, 0.5, 1], 
+            'manual_weight_idx': [21, 23, 24, 26, 27, 30], 
+            'weight_select_criteria': 'magnitude+', 'pw1_weight_only': 0
+        },
+        "99kb": {
+            'enable_backward_config': 1, 'n_bias_update': 22, 'n_weight_update': 0, 
+            'weight_update_ratio': [1, 1, 1, 1, 0.125, 0.25], 
+            'manual_weight_idx': [21, 24, 27, 30, 36, 39], 
+            'weight_select_criteria': 'magnitude+', 'pw1_weight_only': 0
+        },
+        "124kb": {
+            'enable_backward_config': 1, 'n_bias_update': 24, 'n_weight_update': 0, 
+            'weight_update_ratio': [0.25, 1, 1, 1, 0.5, 0.5], 
+            'manual_weight_idx': [21, 24, 27, 30, 33, 39], 
+            'weight_select_criteria': 'magnitude+', 'pw1_weight_only': 0
+        },
+        "148kb": {
+            'enable_backward_config': 1, 'n_bias_update': 23, 'n_weight_update': 0, 
+            'weight_update_ratio': [1, 1, 1, 1, 1, 0.5], 
+            'manual_weight_idx': [21, 24, 27, 30, 36, 39], 
+            'weight_select_criteria': 'magnitude+', 'pw1_weight_only': 0
         }
     }
 fwd_mod, real_params, scale_params, op_idx = pth_model_to_ir(model, input_res=[1, 3, rs, rs], num_classes=num_classes)
