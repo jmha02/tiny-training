@@ -11,14 +11,14 @@ run_config:
 net_config:
   net_name: mbv2-w0.35
 
-backward_config:  # for partial backward
-  enable_backward_config: 0
-  n_bias_update: null
-  n_weight_update: null
-  weight_update_ratio: null
-  weight_select_criteria: magnitude+
-  pw1_weight_only: 0
-  manual_weight_idx: null
-  quantize_gradient: 0
-  freeze_fc: 0
-  train_scale: 0
+# backward_config:  # for partial backward
+#   enable_backward_config: 0
+#   n_bias_update: null
+#   n_weight_update: null
+#   weight_update_ratio: null
+#   weight_select_criteria: magnitude+
+#   pw1_weight_only: 0
+#   manual_weight_idx: null
+#   quantize_gradient: 0
+#   freeze_fc: 0
+#   train_scale: 0

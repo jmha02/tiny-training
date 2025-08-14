@@ -1,3 +1,7 @@
 [submodule "third_party/tvm-hack"]
 	path = third_party/tvm-hack
 	url = https://github.com/Lyken17/tvm-hack
+
+[submodule "third_party/tinyengine"]
+	path = third_party/tinyengine
+	url = https://github.com/mit-han-lab/tinyengine

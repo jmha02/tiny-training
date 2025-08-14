@@ -12,7 +12,8 @@ data_provider:
   base_batch_size: 64
   n_worker: 0
   image_size: 128
-  num_classes: 1000  # ResNet18 is pretrained on ImageNet (1000 classes)
+  num_classes: null
+  #num_classes: 1000  # ResNet18 is pretrained on ImageNet (1000 classes)
 
 run_config:
   # learning rate
@@ -39,7 +40,7 @@ run_config:
   n_block_update: -1
 
 net_config:
-  net_name: resnet18  # Available options: mbv2-w0.35, mcunet-5fps, proxyless-w0.3, resnet18
+  net_name: null  # Available options: mbv2-w0.35, mcunet-5fps, proxyless-w0.3, resnet18
   pretrained: false
   cls_head: linear
   dropout: 0.

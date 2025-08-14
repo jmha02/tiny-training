@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 
-from algorithm.core.utils.config import configs
+from core.utils.config import configs
 from algorithm.quantize.quantized_ops_diff import ScaledLinear
 
 def _append_flatten(model_q):

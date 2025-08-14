@@ -1,6 +1,7 @@
 .DS_Store
 
 ir_zoos/*
+.pkl_memorize_py3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
